@@ -30,6 +30,7 @@ const emit = defineEmits(["reset"]);
 .outcome {
   position: absolute;
   background: #fff;
+  color: #000;
   border: 2px solid #999;
   left: 10%;
   top: 10vh;
