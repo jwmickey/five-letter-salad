@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 
 import {
-  GuessState,
   type Guess,
   type GuessChar,
   type GuessInProgress,
   Keys,
+  GuessState,
 } from "../utils/GameTypes";
 import {
-  isCorrect,
-  inWord,
-  randomWord,
+  analyzeGuess,
   isAWord,
+  lettersOfState,
+  randomWord,
+  ALL_LETTERS,
   NUM_ALLOWED_ATTEMPTS,
   NUM_LETTERS,
-  ALL_LETTERS,
 } from "../utils/Logic";
 import GuessEntry from "./GuessEntry.vue";
 import CurrentGuess from "./CurrentGuess.vue";
@@ -28,7 +28,7 @@ const guessInProgress = ref<GuessInProgress>([]);
 const showNotAWord = ref<boolean>(false);
 let word = ref("");
 
-reset();
+onMounted(reset);
 
 function reset() {
   word.value = randomWord();
@@ -68,16 +68,7 @@ function submitGuess(): void {
       return;
     }
 
-    const nextGuess: Guess = guessInProgress.value.map((letter, slot) => {
-      let state = GuessState.WRONG;
-      if (isCorrect(word.value, slot, letter)) {
-        state = GuessState.CORRECT;
-      } else if (inWord(word.value, slot, letter)) {
-        state = GuessState.IN_WORD;
-      }
-      return { letter, state };
-    });
-
+    const nextGuess: Guess = analyzeGuess(word.value, guessInProgress.value);
     guessInProgress.value = [];
     guesses.value.push(nextGuess);
   }
@@ -102,43 +93,15 @@ const winner = computed((): boolean => {
 });
 
 const wrongLetters = computed((): string[] => {
-  const letters: string[] = [];
-  guesses.value.forEach((guess) => {
-    guess.forEach(({ letter }, slot) => {
-      if (!letters.includes(letter) && !inWord(word.value, slot, letter)) {
-        letters.push(letter);
-      }
-    });
-  });
-  return letters;
+  return lettersOfState(guesses.value, GuessState.WRONG);
 });
 
 const correctLetters = computed((): string[] => {
-  const letters: string[] = [];
-  guesses.value.forEach((guess) => {
-    guess.forEach(({ letter }, slot) => {
-      if (!letters.includes(letter) && isCorrect(word.value, slot, letter)) {
-        letters.push(letter);
-      }
-    });
-  });
-  return letters;
+  return lettersOfState(guesses.value, GuessState.CORRECT);
 });
 
 const lettersInWord = computed((): string[] => {
-  const letters: string[] = [];
-  guesses.value.forEach((guess) => {
-    guess.forEach(({ letter }, slot) => {
-      if (
-        !letters.includes(letter) &&
-        inWord(word.value, slot, letter) &&
-        !isCorrect(word.value, slot, letter)
-      ) {
-        letters.push(letter);
-      }
-    });
-  });
-  return letters;
+  return lettersOfState(guesses.value, GuessState.IN_WORD);
 });
 
 function handleKeyUp(event: KeyboardEvent) {
@@ -188,7 +151,7 @@ window.addEventListener("keyup", handleKeyUp);
   ></GameOver>
 </template>
 
-<style>
+<style scoped>
 .board {
   margin: 10px 10px 40px 10px;
   color: #000;

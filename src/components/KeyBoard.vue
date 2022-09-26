@@ -39,7 +39,7 @@ const rows: string[][] = [
   </div>
 </template>
 
-<style>
+<style scoped>
 .debug {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -68,6 +68,7 @@ const rows: string[][] = [
 }
 .key.correct {
   background-color: rgb(46, 147, 46) !important;
+  color: #fff !important;
 }
 .key.inword {
   background-color: rgb(255, 255, 122);
