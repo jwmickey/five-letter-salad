@@ -53,9 +53,9 @@ const rows: string[][] = [
 }
 .key {
   flex: 0;
-  padding: 5px;
+  padding: 10px 5px;
   margin: 0 2px;
-  min-width: 30px;
+  min-width: 8vw;
   border: 1px solid #999;
   background-color: #666;
   color: #fff;

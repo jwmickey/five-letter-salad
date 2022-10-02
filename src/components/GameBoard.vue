@@ -138,8 +138,8 @@ window.addEventListener("keyup", handleKeyUp);
       :correctLetters="correctLetters"
       @type-letter="typeLetter"
     ></KeyBoard>
-    <div v-if="showNotAWord">
-      <strong>Sorry, this word is not in my (abbreviated) dictionary.</strong>
+    <div v-if="showNotAWord" class="wrong">
+      <strong>Sorry, this word is not in my dictionary.</strong>
     </div>
   </div>
   <GameOver
@@ -157,5 +157,9 @@ window.addEventListener("keyup", handleKeyUp);
   color: #000;
   display: flex;
   flex-flow: column nowrap;
+}
+.wrong {
+  text-align: center;
+  color: yellow;
 }
 </style>

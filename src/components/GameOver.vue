@@ -32,11 +32,12 @@ const emit = defineEmits(["reset"]);
   background: #fff;
   color: #000;
   border: 2px solid #999;
-  left: 10%;
-  top: 10vh;
-  width: 80%;
-  height: 80vh;
-  padding: 20px;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: 50px;
+  padding: 25px;
   text-align: center;
   font-size: 1.2em;
 }
