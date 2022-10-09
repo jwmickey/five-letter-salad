@@ -1,4 +1,4 @@
-# Word Guess
+# Five Word Salad
 
 This is an educational project to learn a little about Vue3.  The project is obviously based on
 the popular Wordle game presented by The New York Times.  The game selects from a relatively short
@@ -8,6 +8,16 @@ are plural forms of base words, etc.
 If you are interested in playing the actual game, I strongly recommend you go to the Times and
 enjoy the official game which has well thought out words, player history, sharing results with
 friends, etc.
+
+## Changelog
+
+### [0.0.1] - 8 Oct 2022
+
+Added local storage to save current game progress
+
+### [0.0.0] - 20 Sep 2022
+
+First working game
 
 ## Recommended IDE Setup
 
