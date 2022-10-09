@@ -12,6 +12,11 @@ export enum GuessState {
 export type Guess = GuessChar[];
 
 export type GuessInProgress = string[];
+export interface GameState {
+  guesses: Guess[];
+  currentGuess: GuessInProgress;
+  word: string;
+}
 
 export enum Keys {
   ENTER = "⏎",

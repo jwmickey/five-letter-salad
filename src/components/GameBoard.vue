@@ -3,7 +3,6 @@ import { computed, ref, onMounted } from "vue";
 
 import {
   type Guess,
-  type GuessChar,
   type GuessInProgress,
   Keys,
   GuessState,
@@ -12,28 +11,43 @@ import {
   analyzeGuess,
   isAWord,
   lettersOfState,
-  randomWord,
   ALL_LETTERS,
   NUM_ALLOWED_ATTEMPTS,
   NUM_LETTERS,
 } from "../utils/Logic";
+import { GameManager } from "../utils/GameManager";
 import GuessEntry from "./GuessEntry.vue";
 import CurrentGuess from "./CurrentGuess.vue";
 import RemainingGuesses from "./RemainingGuesses.vue";
 import KeyBoard from "./KeyBoard.vue";
 import GameOver from "./GameOver.vue";
 
-const guesses = ref<GuessChar[][]>([]);
+const manager = new GameManager(window);
+const guesses = ref<Guess[]>([]);
 const guessInProgress = ref<GuessInProgress>([]);
 const showNotAWord = ref<boolean>(false);
 let word = ref("");
 
-onMounted(reset);
+onMounted(init);
+
+function init() {
+  const game = manager.load();
+  guesses.value = game.guesses;
+  guessInProgress.value = game.currentGuess;
+  word.value = game.word;
+}
+
+function saveGame() {
+  manager.save({
+    guesses: guesses.value,
+    currentGuess: guessInProgress.value,
+    word: word.value,
+  });
+}
 
 function reset() {
-  word.value = randomWord();
-  guesses.value = [];
-  guessInProgress.value = [];
+  manager.createGame();
+  init();
 }
 
 function typeLetter(letter: string): void {
@@ -71,6 +85,8 @@ function submitGuess(): void {
     const nextGuess: Guess = analyzeGuess(word.value, guessInProgress.value);
     guessInProgress.value = [];
     guesses.value.push(nextGuess);
+
+    saveGame();
   }
 }
 

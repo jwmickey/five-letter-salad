@@ -61,6 +61,7 @@ const rows: string[][] = [
   color: #fff;
   text-align: center;
   text-transform: uppercase;
+  cursor: pointer;
 }
 .key.wrong {
   background-color: #333;
@@ -78,5 +79,11 @@ const rows: string[][] = [
 .row:last-child .key:last-child {
   min-width: 50px;
   background-color: #999;
+}
+
+@media (min-width: 980px) {
+  .key {
+    min-width: 32px;
+  }
 }
 </style>
