@@ -13,7 +13,7 @@ friends, etc.
 
 ### [0.0.1] - 8 Oct 2022
 
-Added local storage to save current game progress
+Added local storage to save current game progress.  For you, Grandma!
 
 ### [0.0.0] - 20 Sep 2022
 
