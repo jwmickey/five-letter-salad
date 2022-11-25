@@ -7,32 +7,17 @@ defineProps<{
 </script>
 
 <template>
-  <div class="pagination">
-    <div v-if="page > 1">
+  <div class="flex justify-center items-center">
+    <div class="p-2" v-if="page > 1">
       <router-link :to="{ name: route, params: { page: page - 1 } }">{{
         page - 1
       }}</router-link>
     </div>
-    <div class="current">{{ page }}</div>
-    <div v-if="page < numPages">
+    <div class="p-2 font-bold">{{ page }}</div>
+    <div class="p-2" v-if="page < numPages">
       <router-link :to="{ name: route, params: { page: page + 1 } }">{{
         page + 1
       }}</router-link>
     </div>
   </div>
 </template>
-
-<style scoped>
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.pagination > div {
-  flex: 0;
-  padding: 8px;
-}
-.current {
-  font-weight: bold;
-}
-</style>

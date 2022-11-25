@@ -31,13 +31,12 @@ function showGame(game: GameHistory) {
 
 <template>
   <NavBar title="Your History" back-path="/"></NavBar>
-  <table>
+  <table class="table-auto border-collapse mx-2 mt-4">
     <thead>
       <tr>
-        <th>Word</th>
+        <th class="text-left">Word</th>
         <th>Attempts</th>
-        <th>Result</th>
-        <th>Date</th>
+        <th class="text-right">Date</th>
       </tr>
     </thead>
     <tbody>
@@ -46,60 +45,35 @@ function showGame(game: GameHistory) {
         v-bind:key="item.datePlayed.toISOString()"
         @click="showGame(item)"
       >
-        <td :class="{ word: true, wrong: item.lose }">
-          {{ item.word.toUpperCase() }}
+        <td
+          class="font-mono tracking-[.25em] text-lg uppercase"
+          :class="{ 'line-through decoration-red-800': item.lose }"
+        >
+          {{ item.word }}
         </td>
-        <td>
+        <td class="text-center">
           <span
+            class="w-6 h-6 rounded-full inline-flex justify-center items-center text-black"
             :class="{
-              attempts: true,
-              wrong: item.lose,
+              'bg-red-700 strike-through': item.lose,
               ['attempts-' + item.numAttempts]: item.win,
             }"
             >{{ item.numAttempts }}</span
           >
         </td>
-        <td>{{ item.win ? "Win!" : "lose" }}</td>
-        <td>{{ item.datePlayed.toLocaleDateString() }}</td>
+        <td class="text-right">{{ item.datePlayed.toLocaleDateString() }}</td>
       </tr>
     </tbody>
   </table>
-  <Pagination :numPages="numPages" :page="page" :route="'history'"></Pagination>
+  <Pagination
+    v-if="numPages > 1"
+    :numPages="numPages"
+    :page="page"
+    :route="'history'"
+  ></Pagination>
 </template>
 
 <style scoped>
-table {
-  width: 100%;
-  background-color: #333;
-  color: #ddd;
-  border-collapse: collapse;
-}
-table td,
-table th {
-  text-align: center;
-  padding: 4px 2px;
-  border-bottom: 1px solid #666;
-}
-.word {
-  font-family: "Courier New", Courier, monospace;
-  font-size: 1.2rem;
-  letter-spacing: 0.2rem;
-}
-.word.wrong {
-  text-decoration: line-through;
-}
-.attempts {
-  border-radius: 50%;
-  width: 1.5rem;
-  height: 1.5rem;
-  display: inline-block;
-  color: #000;
-  font-weight: bold;
-  border: 1px solid #efefef;
-  line-height: 1.4rem;
-  font-size: 1rem;
-}
-
 .attempts-1 {
   background-color: purple;
 }
@@ -112,14 +86,12 @@ table th {
 .attempts-4 {
   background-color: yellowgreen;
 }
-
 .attempts-5 {
   background-color: yellow;
 }
 .attempts-6 {
   background-color: orange;
 }
-
 .attempts.wrong {
   background-color: red;
 }

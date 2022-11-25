@@ -135,7 +135,7 @@ window.addEventListener("keyup", handleKeyUp);
 
 <template>
   <NavBar title="Five Letter Salad"></NavBar>
-  <div class="game">
+  <div class="flex flex-1 flex-col justify-between">
     <div class="board">
       <GuessEntry
         v-bind:key="i"
@@ -151,16 +151,16 @@ window.addEventListener("keyup", handleKeyUp);
         :gameOver="isGameOver"
       ></RemainingGuesses>
     </div>
-    <div class="controls">
+    <div class="pb-2">
+      <div v-if="showNotAWord" class="text-red-500 text-center py-2">
+        <strong>Sorry, this word is not in my dictionary.</strong>
+      </div>
       <KeyBoard
         :wrongLetters="wrongLetters"
         :lettersInWord="lettersInWord"
         :correctLetters="correctLetters"
         @type-letter="typeLetter"
       ></KeyBoard>
-      <div v-if="showNotAWord" class="wrong">
-        <strong>Sorry, this word is not in my dictionary.</strong>
-      </div>
     </div>
   </div>
   <GameOver
@@ -171,23 +171,3 @@ window.addEventListener("keyup", handleKeyUp);
     @reset="reset"
   ></GameOver>
 </template>
-
-<style scoped>
-.wrong {
-  text-align: center;
-  color: yellow;
-}
-.game {
-  display: flex;
-  flex-flow: column wrap;
-}
-
-.game > div {
-  flex: 1;
-}
-@media (min-width: 1024px) {
-  .game {
-    flex-direction: row;
-  }
-}
-</style>
