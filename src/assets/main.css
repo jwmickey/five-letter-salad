@@ -2,8 +2,11 @@
 
 #app {
   max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
   font-weight: normal;
+  display: flex;
+  flex-flow: column wrap;
 }
 
 a,
@@ -23,12 +26,6 @@ a,
   body {
     display: flex;
     place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
   }
 }
 

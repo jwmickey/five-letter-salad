@@ -135,30 +135,32 @@ window.addEventListener("keyup", handleKeyUp);
 
 <template>
   <NavBar title="Five Letter Salad"></NavBar>
-  <div class="board">
-    <GuessEntry
-      v-bind:key="i"
-      v-for="(guess, i) in guesses"
-      :guess="guess"
-    ></GuessEntry>
-    <CurrentGuess
-      v-if="!isGameOver"
-      :guessInProgress="guessInProgress"
-    ></CurrentGuess>
-    <RemainingGuesses
-      :remaining="remaining"
-      :gameOver="isGameOver"
-    ></RemainingGuesses>
-  </div>
-  <div>
-    <KeyBoard
-      :wrongLetters="wrongLetters"
-      :lettersInWord="lettersInWord"
-      :correctLetters="correctLetters"
-      @type-letter="typeLetter"
-    ></KeyBoard>
-    <div v-if="showNotAWord" class="wrong">
-      <strong>Sorry, this word is not in my dictionary.</strong>
+  <div class="game">
+    <div class="board">
+      <GuessEntry
+        v-bind:key="i"
+        v-for="(guess, i) in guesses"
+        :guess="guess"
+      ></GuessEntry>
+      <CurrentGuess
+        v-if="!isGameOver"
+        :guessInProgress="guessInProgress"
+      ></CurrentGuess>
+      <RemainingGuesses
+        :remaining="remaining"
+        :gameOver="isGameOver"
+      ></RemainingGuesses>
+    </div>
+    <div class="controls">
+      <KeyBoard
+        :wrongLetters="wrongLetters"
+        :lettersInWord="lettersInWord"
+        :correctLetters="correctLetters"
+        @type-letter="typeLetter"
+      ></KeyBoard>
+      <div v-if="showNotAWord" class="wrong">
+        <strong>Sorry, this word is not in my dictionary.</strong>
+      </div>
     </div>
   </div>
   <GameOver
@@ -174,5 +176,18 @@ window.addEventListener("keyup", handleKeyUp);
 .wrong {
   text-align: center;
   color: yellow;
+}
+.game {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.game > div {
+  flex: 1;
+}
+@media (min-width: 1024px) {
+  .game {
+    flex-direction: row;
+  }
 }
 </style>
