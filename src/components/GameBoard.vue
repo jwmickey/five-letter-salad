@@ -15,14 +15,15 @@ import {
   NUM_ALLOWED_ATTEMPTS,
   NUM_LETTERS,
 } from "../utils/Logic";
-import { GameManager } from "../utils/GameManager";
 import GuessEntry from "./GuessEntry.vue";
 import CurrentGuess from "./CurrentGuess.vue";
 import RemainingGuesses from "./RemainingGuesses.vue";
 import KeyBoard from "./KeyBoard.vue";
 import GameOver from "./GameOver.vue";
+import NavBar from "./NavBar.vue";
+import { useGameManager } from "@/utils/providers";
 
-const manager = new GameManager(window);
+const gm = useGameManager();
 const guesses = ref<Guess[]>([]);
 const guessInProgress = ref<GuessInProgress>([]);
 const showNotAWord = ref<boolean>(false);
@@ -31,14 +32,14 @@ let word = ref("");
 onMounted(init);
 
 function init() {
-  const game = manager.load();
+  const game = gm.load();
   guesses.value = game.guesses;
   guessInProgress.value = game.currentGuess;
   word.value = game.word;
 }
 
 function saveGame() {
-  manager.save({
+  gm.save({
     guesses: guesses.value,
     currentGuess: guessInProgress.value,
     word: word.value,
@@ -46,7 +47,8 @@ function saveGame() {
 }
 
 function reset() {
-  manager.createGame();
+  gm.saveToHistory(gm.load());
+  gm.createGame();
   init();
 }
 
@@ -132,6 +134,7 @@ window.addEventListener("keyup", handleKeyUp);
 </script>
 
 <template>
+  <NavBar title="Five Letter Salad"></NavBar>
   <div class="board">
     <GuessEntry
       v-bind:key="i"
@@ -168,12 +171,6 @@ window.addEventListener("keyup", handleKeyUp);
 </template>
 
 <style scoped>
-.board {
-  margin: 10px 10px 40px 10px;
-  color: #000;
-  display: flex;
-  flex-flow: column nowrap;
-}
 .wrong {
   text-align: center;
   color: yellow;

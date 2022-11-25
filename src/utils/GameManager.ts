@@ -1,8 +1,10 @@
-import type { GameState } from "./GameTypes";
+import { GameHistory } from "./GameHistory";
+import type { GameState, IGameHistory } from "./GameTypes";
 import { randomWord } from "./Logic";
 
 const LSKEY_PREFIX = "fws_";
 const LSKEY_CURRENT_GAME = LSKEY_PREFIX + "current_game";
+const LSKEY_HISTORY = LSKEY_PREFIX + "history";
 
 export class GameManager {
   constructor(private storage: WindowLocalStorage) {}
@@ -33,5 +35,33 @@ export class GameManager {
     const copy = { ...game };
     copy.word = btoa(copy.word); // you are only cheating yourself!
     this.storage.localStorage.setItem(LSKEY_CURRENT_GAME, JSON.stringify(copy));
+  }
+
+  saveToHistory(game: GameState): void {
+    const entry = GameHistory.createFromGame(game);
+    const history = this.loadHistory();
+    history.unshift(entry.data);
+    this.storage.localStorage.setItem(LSKEY_HISTORY, JSON.stringify(history));
+  }
+
+  loadHistory(): IGameHistory[] {
+    return JSON.parse(this.storage.localStorage.getItem(LSKEY_HISTORY) || "[]");
+  }
+
+  clearHistory(): void {
+    this.storage.localStorage.setItem(LSKEY_HISTORY, JSON.stringify([]));
+  }
+
+  loadEntry(id: string): GameHistory | undefined {
+    const lastDash = id.lastIndexOf("-");
+    const dateString = id.substring(0, lastDash);
+    const word = id.substring(lastDash + 1);
+    const history = this.loadHistory();
+    const record = history.find(
+      (h) =>
+        h.word === word &&
+        (h.datePlayed as unknown as string).substring(0, 10) === dateString
+    );
+    return record ? GameHistory.createFromData(record) : undefined;
   }
 }
