@@ -23,7 +23,7 @@ const game = gm.loadEntry(entry);
       >
       </GuessEntry>
     </div>
-    <div class="history-info">
+    <div class="p-10 text-center">
       You completed this game<br />
       <strong>{{ game.datePlayed.toDateString() }}</strong>
       at
@@ -32,10 +32,3 @@ const game = gm.loadEntry(entry);
     </div>
   </div>
 </template>
-
-<style scoped>
-.history-info {
-  padding: 10px;
-  text-align: center;
-}
-</style>
