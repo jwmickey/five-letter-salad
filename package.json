@@ -1,6 +1,6 @@
 {
   "name": "word-guess",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "scripts": {
     "dev": "vite --host",
     "build": "run-p type-check build-only",
