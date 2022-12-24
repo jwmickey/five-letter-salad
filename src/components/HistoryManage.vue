@@ -45,7 +45,6 @@ function doImport(event: Event) {
   reader.addEventListener("load", (event2) => {
     const encoded = event2.target?.result?.toString() as string;
     const decoded = atob(encoded.slice(encoded.indexOf(",") + 1));
-    console.log(decoded);
     gm.importHistory(decoded);
     importSuccess.value = true;
     setTimeout(() => {
