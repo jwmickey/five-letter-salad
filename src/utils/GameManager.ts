@@ -45,7 +45,13 @@ export class GameManager {
   }
 
   loadHistory(): IGameHistory[] {
-    return JSON.parse(this.storage.localStorage.getItem(LSKEY_HISTORY) || "[]");
+    const raw = this.storage.localStorage.getItem(LSKEY_HISTORY);
+    try {
+      return JSON.parse(raw || "[]");
+    } catch (err) {
+      console.error("Unable to parse history!", raw);
+      return [];
+    }
   }
 
   clearHistory(): void {
@@ -63,5 +69,16 @@ export class GameManager {
         (h.datePlayed as unknown as string).substring(0, 10) === dateString
     );
     return record ? GameHistory.createFromData(record) : undefined;
+  }
+
+  exportHistory(): string {
+    return this.storage.localStorage.getItem(LSKEY_HISTORY) || "[]";
+  }
+
+  importHistory(rawData: string | undefined) {
+    if (typeof rawData !== "string") {
+      rawData = JSON.stringify(rawData);
+    }
+    this.storage.localStorage.setItem(LSKEY_HISTORY, rawData);
   }
 }

@@ -3,6 +3,7 @@ import GameHistoryComponent from "@/components/GameHistory.vue";
 import HistoryEntry from "@/components/HistoryEntry.vue";
 import MenuDrawer from "@/components/MenuDrawer.vue";
 import AboutPage from "@/components/AboutPage.vue";
+import HistoryManage from "@/components/HistoryManage.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
@@ -22,6 +23,11 @@ const router = createRouter({
       path: "/history/game/:entry",
       name: "history_entry",
       component: HistoryEntry,
+    },
+    {
+      path: "/history/manage",
+      name: "history_manage",
+      component: HistoryManage,
     },
     {
       path: "/menu",

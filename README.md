@@ -11,6 +11,14 @@ friends, etc.
 
 ## Changelog
 
+### [0.0.3] - 23 Dec 2022
+
+Added history manager to export/import/erase game history
+
+### [0.0.2] - 25 Nov 2022
+
+Replaced custom css with Tailwind
+
 ### [0.0.1] - 8 Oct 2022
 
 Added local storage to save current game progress.  For you, Grandma!

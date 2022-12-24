@@ -9,7 +9,7 @@ import { useGameManager } from "@/utils/providers";
 const gm = useGameManager();
 const history = gm.loadHistory();
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 50;
 const numPages = Math.ceil(history.length / PAGE_SIZE);
 const page = computed(() => {
   const given = Number(router.currentRoute.value.params.page);
@@ -31,46 +31,58 @@ function showGame(game: GameHistory) {
 
 <template>
   <NavBar title="Your History" back-path="/"></NavBar>
-  <table class="table-auto border-collapse mx-2 mt-4">
-    <thead>
-      <tr>
-        <th class="text-left">Word</th>
-        <th>Attempts</th>
-        <th class="text-right">Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        v-for="item in pageItems"
-        v-bind:key="item.datePlayed.toISOString()"
-        @click="showGame(item)"
-      >
-        <td
-          class="font-mono tracking-[.25em] text-lg uppercase"
-          :class="{ 'line-through decoration-red-800': item.lose }"
+  <div v-if="pageItems.length">
+    <table class="table-auto border-collapse mx-2 mt-4">
+      <thead>
+        <tr>
+          <th class="text-left">Word</th>
+          <th>Attempts</th>
+          <th class="text-right">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="item in pageItems"
+          v-bind:key="item.datePlayed.toISOString()"
+          @click="showGame(item)"
         >
-          {{ item.word }}
-        </td>
-        <td class="text-center">
-          <span
-            class="w-6 h-6 rounded-full inline-flex justify-center items-center text-black"
-            :class="{
-              'bg-red-700 strike-through': item.lose,
-              ['attempts-' + item.numAttempts]: item.win,
-            }"
-            >{{ item.numAttempts }}</span
+          <td
+            class="font-mono tracking-[.25em] text-lg uppercase"
+            :class="{ 'line-through decoration-red-800': item.lose }"
           >
-        </td>
-        <td class="text-right">{{ item.datePlayed.toLocaleDateString() }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <Pagination
-    v-if="numPages > 1"
-    :numPages="numPages"
-    :page="page"
-    :route="'history'"
-  ></Pagination>
+            {{ item.word }}
+          </td>
+          <td class="text-center">
+            <span
+              class="w-6 h-6 rounded-full inline-flex justify-center items-center text-black"
+              :class="{
+                'bg-red-700 strike-through': item.lose,
+                ['attempts-' + item.numAttempts]: item.win,
+              }"
+              >{{ item.numAttempts }}</span
+            >
+          </td>
+          <td class="text-right">{{ item.datePlayed.toLocaleDateString() }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <Pagination
+      v-if="numPages > 1"
+      :numPages="numPages"
+      :page="page"
+      :route="'history'"
+    ></Pagination>
+  </div>
+  <div v-else>
+    <p>
+      You don't have any saved game history. Why not
+      <router-link :to="{ name: 'play' }">play</router-link> a game now?
+    </p>
+  </div>
+  <div class="mt-5">
+    <hr />
+    <router-link :to="{ name: 'history_manage' }">Manage History</router-link>
+  </div>
 </template>
 
 <style scoped>
