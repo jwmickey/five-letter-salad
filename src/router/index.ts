@@ -1,5 +1,6 @@
 import GameBoard from "@/components/GameBoard.vue";
 import GameHistoryComponent from "@/components/GameHistory.vue";
+import GameStats from "@/components/GameStats.vue";
 import HistoryEntry from "@/components/HistoryEntry.vue";
 import MenuDrawer from "@/components/MenuDrawer.vue";
 import AboutPage from "@/components/AboutPage.vue";
@@ -13,6 +14,11 @@ const router = createRouter({
       path: "/",
       name: "play",
       component: GameBoard,
+    },
+    {
+      path: "/stats",
+      name: "stats",
+      component: GameStats,
     },
     {
       path: "/history/:page?",
