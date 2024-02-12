@@ -42,7 +42,7 @@ function keyClasses(k: string): string {
     >
       <div
         @click="emit('typeLetter', key)"
-        class="flex-none basis-8 rounded-sm py-2 border border-gray-500 text-center uppercase cursor-pointer font-bold text-lg"
+        class="flex-none basis-8 rounded py-2 border border-gray-500 text-center uppercase cursor-pointer font-bold text-2xl"
         :class="keyClasses(key)"
         v-bind:key="key"
         v-for="key in row"
