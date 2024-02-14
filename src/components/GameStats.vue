@@ -72,11 +72,14 @@ const stats = computed(() => {
     // get play freqeuncy stats
     if (gh.datePlayed >= today) {
       s.playFrequency.today++;
-    } else if (gh.datePlayed >= thisWeek) {
+    }
+    if (gh.datePlayed >= thisWeek) {
       s.playFrequency.week++;
-    } else if (gh.datePlayed >= thisMonth) {
+    }
+    if (gh.datePlayed >= thisMonth) {
       s.playFrequency.month++;
-    } else if (gh.datePlayed >= thisYear) {
+    }
+    if (gh.datePlayed >= thisYear) {
       s.playFrequency.year++;
     }
 
@@ -110,14 +113,18 @@ const stats = computed(() => {
 <template>
   <NavBar title="Stats" back-path="/"></NavBar>
   <div class="p-2 text-gray-100">
-    <div class="grid grid-cols-3 gap-2">
+    <div class="grid grid-cols-2 gap-2">
       <div class="shadow-md bg-gray-700 p-2 rounded-md text-center">
-        <div class="text-sm">Win Percentage</div>
-        <p class="text-lg font-mono">{{ stats.winPercentage }}%</p>
+        <div class="text-sm">Current Streak</div>
+        <p class="text-lg font-mono">{{ stats.currentStreak }}</p>
       </div>
       <div class="shadow-md bg-gray-700 p-2 rounded-md text-center">
         <div class="text-sm">Longest Streak</div>
         <p class="text-lg font-mono">{{ stats.longestStreak }}</p>
+      </div>
+      <div class="shadow-md bg-gray-700 p-2 rounded-md text-center">
+        <div class="text-sm">Win Percentage</div>
+        <p class="text-lg font-mono">{{ stats.winPercentage }}%</p>
       </div>
       <div class="shadow-md bg-gray-700 p-2 rounded-md text-center">
         <div class="text-sm">Total Played</div>
