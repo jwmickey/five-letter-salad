@@ -56,35 +56,38 @@ const stats = computed(() => {
   const thisYear = new Date(thisMonth);
   thisYear.setMonth(0);
 
-  const collected: Stats = history.reduce((s, entry) => {
-    const gh = GameHistory.createFromData(entry);
+  const collected: Stats = history
+    .slice()
+    .reverse()
+    .reduce((s, entry) => {
+      const gh = GameHistory.createFromData(entry);
 
-    // get win streak and guess distribution
-    if (gh.win) {
-      s.currentStreak++;
-      s.guesses[entry.numAttempts - 1]++;
-    } else {
-      s.longestStreak = Math.max(s.longestStreak, s.currentStreak);
-      s.currentStreak = 0;
-      s.misses++;
-    }
+      // get win streak and guess distribution
+      if (gh.win) {
+        s.currentStreak++;
+        s.guesses[entry.numAttempts - 1]++;
+      } else {
+        s.longestStreak = Math.max(s.longestStreak, s.currentStreak);
+        s.currentStreak = 0;
+        s.misses++;
+      }
 
-    // get play freqeuncy stats
-    if (gh.datePlayed >= today) {
-      s.playFrequency.today++;
-    }
-    if (gh.datePlayed >= thisWeek) {
-      s.playFrequency.week++;
-    }
-    if (gh.datePlayed >= thisMonth) {
-      s.playFrequency.month++;
-    }
-    if (gh.datePlayed >= thisYear) {
-      s.playFrequency.year++;
-    }
+      // get play freqeuncy stats
+      if (gh.datePlayed >= today) {
+        s.playFrequency.today++;
+      }
+      if (gh.datePlayed >= thisWeek) {
+        s.playFrequency.week++;
+      }
+      if (gh.datePlayed >= thisMonth) {
+        s.playFrequency.month++;
+      }
+      if (gh.datePlayed >= thisYear) {
+        s.playFrequency.year++;
+      }
 
-    return s;
-  }, DEFAULT_STATS);
+      return s;
+    }, DEFAULT_STATS);
 
   // apply final stats math
   collected.maxInNumTries = Math.max(...collected.guesses);
@@ -139,11 +142,14 @@ const stats = computed(() => {
           v-bind:key="i"
           class="flex flex-row items-center ph-8 gap-2"
         >
-          <div class="text-white w-2 items-center justify-self-end">{{ i + 1 }}</div>
+          <div class="text-white w-2 items-center justify-self-end">
+            {{ i + 1 }}
+          </div>
           <div
             class="bar bg-blue-600 text-white flex justify-end items-center min-w-6 pr-2 mb-1"
             :style="{
-              width: Math.round((occurrences / stats.maxInNumTries) * 100) + '%',
+              width:
+                Math.round((occurrences / stats.maxInNumTries) * 100) + '%',
             }"
           >
             {{ occurrences }}
