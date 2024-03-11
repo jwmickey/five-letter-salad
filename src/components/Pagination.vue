@@ -13,7 +13,7 @@ defineProps<{
         page - 1
       }}</router-link>
     </div>
-    <div class="p-2 font-bold">{{ page }}</div>
+    <div class="p-2 font-bold">{{ page }} of {{ numPages }}</div>
     <div class="p-2" v-if="page < numPages">
       <router-link :to="{ name: route, params: { page: page + 1 } }">{{
         page + 1

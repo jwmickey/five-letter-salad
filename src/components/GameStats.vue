@@ -107,7 +107,9 @@ const stats = computed(() => {
     ([word, frequency]) => ({ word, frequency })
   );
   wordFrequencyArray.sort((a, b) => b.frequency - a.frequency);
-  collected.repeatWords = wordFrequencyArray.slice(0, 12);
+  collected.repeatWords = wordFrequencyArray
+    .filter((x) => x.frequency > 1)
+    .slice(0, 12);
 
   return collected;
 });
@@ -158,7 +160,10 @@ const stats = computed(() => {
       </div>
       <p class="text-sm">{{ stats.misses }} losses</p>
     </div>
-    <div class="mt-2 shadow-md bg-gray-700 rounded p-2">
+    <div
+      class="mt-2 shadow-md bg-gray-700 rounded p-2"
+      v-if="stats.repeatWords.length > 0"
+    >
       <p class="text-sm">Repeated Words</p>
       <div class="font-mono uppercase grid grid-cols-3 mt-2 text-center">
         <div v-for="word in stats.repeatWords" v-bind:key="word.word">
