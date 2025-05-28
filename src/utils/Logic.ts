@@ -29,7 +29,6 @@ export function isAWord(candidate: string): boolean {
 /**
  * Creates a guess with determined GuessState for each letter based on the target word.
  */
-/**
 export function analyzeGuess(word: string, inProgress: GuessInProgress): Guess {
   const targetLetters = word.split("");
   const guess = inProgress.map((letter, i) => ({
