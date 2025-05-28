@@ -30,21 +30,25 @@ export function isAWord(candidate: string): boolean {
  * Creates a guess with determined GuessState for each letter based on the target word.
  */
 export function analyzeGuess(word: string, inProgress: GuessInProgress): Guess {
+  const targetLetters = word.split("");
   const guess = inProgress.map((letter, i) => ({
     state: word.charAt(i) === letter ? GuessState.CORRECT : GuessState.WRONG,
     letter,
   }));
 
+  // Create a count of available letters (excluding those already matched correctly)
+  const availableLetters: { [key: string]: number } = {};
+  targetLetters.forEach((letter, i) => {
+    if (guess[i].state !== GuessState.CORRECT) {
+      availableLetters[letter] = (availableLetters[letter] || 0) + 1;
+    }
+  });
+
+  // Mark IN_WORD letters, but only up to the available count
   guess.forEach((entry) => {
-    if (entry.state === GuessState.WRONG && word.includes(entry.letter)) {
-      word.split("").forEach((wordLetter, j) => {
-        if (
-          wordLetter === entry.letter &&
-          guess[j].state !== GuessState.CORRECT
-        ) {
-          entry.state = GuessState.IN_WORD;
-        }
-      });
+    if (entry.state === GuessState.WRONG && availableLetters[entry.letter] > 0) {
+      entry.state = GuessState.IN_WORD;
+      availableLetters[entry.letter]--;
     }
   });
 
