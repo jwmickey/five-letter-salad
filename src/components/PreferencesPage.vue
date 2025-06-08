@@ -17,7 +17,7 @@ function savePreferences() {
 </script>
 
 <template>
-  <NavBar title="Preferences" back-path="/menu"></NavBar>
+  <NavBar title="Preferences" back-path="/"></NavBar>
   <div class="p-6">
     <div class="mb-6">
       <h2 class="text-xl font-semibold mb-4">Word Selection</h2>
