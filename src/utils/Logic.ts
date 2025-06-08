@@ -17,7 +17,7 @@ export function randomWord(useBigWordList = false): string {
   const pos = Math.floor(Math.random() * wordList.length);
   const candidate = wordList[pos];
   if (!isAWord(candidate)) {
-    return randomWord();
+    return randomWord(useBigWordList);
   }
   return candidate;
 }
