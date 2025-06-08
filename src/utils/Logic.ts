@@ -1,4 +1,4 @@
-import WORD_LIST from "./words-subset";
+import WORD_LIST_SUBSET from "./words-subset";
 import BIG_DICTIONARY from "./words";
 import { GuessState, type Guess, type GuessInProgress } from "./GameTypes";
 
@@ -9,9 +9,13 @@ export const ALL_LETTERS = "abcdefghijklmnopqrstuvwxyz";
 /**
  * Chooses a random word from the subset of words.  Checks to make sure the word is in the main dictionary
  */
-export function randomWord(): string {
-  const pos = Math.floor(Math.random() * WORD_LIST.length);
-  const candidate = WORD_LIST[pos];
+export function randomWord(useBigWordList = false): string {
+  let wordList = WORD_LIST_SUBSET;
+  if (useBigWordList) {
+    wordList = BIG_DICTIONARY;
+  }
+  const pos = Math.floor(Math.random() * wordList.length);
+  const candidate = wordList[pos];
   if (!isAWord(candidate)) {
     return randomWord();
   }
