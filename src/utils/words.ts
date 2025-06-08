@@ -5752,5 +5752,5 @@ export default [
   "roble",
   "rumba",
   "biffy",
-  "pupal"
-]
+  "pupal",
+];

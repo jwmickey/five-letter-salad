@@ -5,15 +5,25 @@ import { randomWord } from "./Logic";
 const LSKEY_PREFIX = "fws_";
 const LSKEY_CURRENT_GAME = LSKEY_PREFIX + "current_game";
 const LSKEY_HISTORY = LSKEY_PREFIX + "history";
+const LSKEY_PREFERENCES = LSKEY_PREFIX + "preferences";
+
+export interface IPreferences {
+  useLargeWordDatabase: boolean;
+}
+
+export const DEFAULT_PREFERENCES: IPreferences = {
+  useLargeWordDatabase: false,
+};
 
 export class GameManager {
   constructor(private storage: WindowLocalStorage) {}
 
   createGame(): GameState {
+    const preferences = this.loadPreferences();
     const game = {
       guesses: [],
       currentGuess: [],
-      word: randomWord(),
+      word: randomWord(preferences.useLargeWordDatabase),
     };
     this.save(game);
     return game;
@@ -73,6 +83,23 @@ export class GameManager {
 
   exportHistory(): string {
     return this.storage.localStorage.getItem(LSKEY_HISTORY) || "[]";
+  }
+
+  loadPreferences(): IPreferences {
+    const raw = this.storage.localStorage.getItem(LSKEY_PREFERENCES);
+    try {
+      return { ...DEFAULT_PREFERENCES, ...JSON.parse(raw || "{}") };
+    } catch (err) {
+      console.error("Unable to parse preferences!", raw);
+      return DEFAULT_PREFERENCES;
+    }
+  }
+
+  savePreferences(preferences: IPreferences): void {
+    this.storage.localStorage.setItem(
+      LSKEY_PREFERENCES,
+      JSON.stringify(preferences)
+    );
   }
 
   importHistory(rawData: string | undefined) {

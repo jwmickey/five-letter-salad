@@ -22,13 +22,13 @@ const rows: string[][] = [
 
 function keyClasses(k: string): string {
   if (props.correctLetters.includes(k)) {
-    return 'bg-correct-600 text-gray-800';
+    return "bg-correct-600 text-gray-800";
   } else if (props.lettersInWord.includes(k)) {
-    return 'bg-inword-400 text-gray-800';
+    return "bg-inword-400 text-gray-800";
   } else if (props.wrongLetters.includes(k)) {
-    return 'bg-gray-800 text-gray-400';
+    return "bg-gray-800 text-gray-400";
   } else {
-    return 'bg-gray-500 text-white';
+    return "bg-gray-500 text-white";
   }
 }
 </script>

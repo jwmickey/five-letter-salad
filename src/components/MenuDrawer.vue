@@ -9,6 +9,7 @@ defineProps<{
     <router-link class="mb-2" to="/">Play!</router-link>
     <router-link class="mb-2" to="/stats">Stats</router-link>
     <router-link class="mb-2" to="/history">History</router-link>
+    <router-link class="mb-2" to="/preferences">Preferences</router-link>
     <router-link class="mb-2" to="/about">About</router-link>
     <hr />
     <router-link class="my-2" :to="from ?? '/'">Back</router-link>

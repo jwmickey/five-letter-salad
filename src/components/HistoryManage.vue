@@ -85,7 +85,7 @@ function download(content: string, mimeType: string, filename: string) {
     </div>
     <div class="flex-auto mt-4">
       <p>
-        Import your previously exported file to restore saved history to this 
+        Import your previously exported file to restore saved history to this
         device. <strong>NOTICE:</strong> any previous history on this device
         will be overwritten.
       </p>
@@ -97,7 +97,9 @@ function download(content: string, mimeType: string, filename: string) {
       </button>
       <div v-if="showImport" class="py-2">
         <input type="file" id="import-selector" @change="doImport" />
-        <button class="px-2 bg-slate-600 rounded-sm" @click="cancelImport">Cancel</button>
+        <button class="px-2 bg-slate-600 rounded-sm" @click="cancelImport">
+          Cancel
+        </button>
       </div>
       <div v-if="importSuccess" class="m-2 p-2 bg-green-600 text-white">
         Successfully imported!
