@@ -141,6 +141,7 @@ window.addEventListener("keyup", handleKeyUp);
         v-bind:key="i"
         v-for="(guess, i) in guesses"
         :guess="guess"
+        :isLatestGuess="i === guesses.length - 1"
       ></GuessEntry>
       <CurrentGuess
         v-if="!isGameOver"
