@@ -50,7 +50,10 @@ export function analyzeGuess(word: string, inProgress: GuessInProgress): Guess {
 
   // Mark IN_WORD letters, but only up to the available count
   guess.forEach((entry) => {
-    if (entry.state === GuessState.WRONG && availableLetters[entry.letter] > 0) {
+    if (
+      entry.state === GuessState.WRONG &&
+      availableLetters[entry.letter] > 0
+    ) {
       entry.state = GuessState.IN_WORD;
       availableLetters[entry.letter]--;
     }

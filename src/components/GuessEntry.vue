@@ -19,7 +19,7 @@ onMounted(async () => {
   if (props.isLatestGuess) {
     await nextTick();
     isRevealing.value = true;
-    
+
     // Stop the revealing animation after all letters are done
     setTimeout(() => {
       isRevealing.value = false;
