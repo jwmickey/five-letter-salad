@@ -34,50 +34,66 @@ defineProps<{
 }
 
 .letter-revealing {
-  animation: letterReveal 0.6s ease-in-out forwards;
+  animation: gradualReveal 1.2s ease-in-out forwards;
 }
 
-@keyframes letterReveal {
+@keyframes gradualReveal {
   0% {
-    transform: rotateX(0deg);
-  }
-  50% {
-    transform: rotateX(90deg);
+    background: rgb(203, 213, 225); /* slate-300 - neutral starting color */
   }
   100% {
-    transform: rotateX(0deg);
+    /* Final color will be applied via CSS classes */
   }
 }
 
-/* Additional glow effect for correct letters */
+/* Correct letter gradient animation */
 .bg-correct-500.letter-revealing {
-  animation: letterReveal 0.6s ease-in-out forwards,
-    correctGlow 0.8s ease-in-out;
+  animation: correctReveal 1.2s ease-in-out forwards;
 }
 
-@keyframes correctGlow {
-  0%,
-  100% {
-    box-shadow: 0 0 0 rgba(34, 197, 94, 0);
+@keyframes correctReveal {
+  0% {
+    background: rgb(203, 213, 225); /* slate-300 - neutral */
   }
   50% {
-    box-shadow: 0 0 20px rgba(34, 197, 94, 0.6);
+    background: linear-gradient(45deg, rgb(203, 213, 225), rgb(34, 197, 94)); /* transition gradient */
+  }
+  100% {
+    background: rgb(34, 197, 94); /* green-500 - correct */
   }
 }
 
-/* Pulse effect for in-word letters */
+/* In-word letter gradient animation */
 .bg-inword-300.letter-revealing {
-  animation: letterReveal 0.6s ease-in-out forwards,
-    inWordPulse 0.8s ease-in-out;
+  animation: inwordReveal 1.2s ease-in-out forwards;
 }
 
-@keyframes inWordPulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 rgba(253, 224, 71, 0);
+@keyframes inwordReveal {
+  0% {
+    background: rgb(203, 213, 225); /* slate-300 - neutral */
   }
   50% {
-    box-shadow: 0 0 15px rgba(253, 224, 71, 0.5);
+    background: linear-gradient(45deg, rgb(203, 213, 225), rgb(253, 224, 71)); /* transition gradient */
+  }
+  100% {
+    background: rgb(253, 224, 71); /* yellow-300 - in word */
+  }
+}
+
+/* Incorrect letter gradient animation */
+.bg-incorrect-600.letter-revealing {
+  animation: incorrectReveal 1.2s ease-in-out forwards;
+}
+
+@keyframes incorrectReveal {
+  0% {
+    background: rgb(203, 213, 225); /* slate-300 - neutral */
+  }
+  50% {
+    background: linear-gradient(45deg, rgb(203, 213, 225), rgb(82, 82, 82)); /* transition gradient */
+  }
+  100% {
+    background: rgb(82, 82, 82); /* neutral-600 - incorrect */
   }
 }
 </style>

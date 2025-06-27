@@ -21,9 +21,10 @@ onMounted(async () => {
     isRevealing.value = true;
 
     // Stop the revealing animation after all letters are done
+    // 1200ms animation + stagger delay for last letter (4 * 100ms) + buffer
     setTimeout(() => {
       isRevealing.value = false;
-    }, 600 + (NUM_LETTERS - 1) * 100 + 100);
+    }, 1200 + (NUM_LETTERS - 1) * 100 + 100);
   }
 });
 </script>
